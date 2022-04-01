@@ -1,11 +1,12 @@
+require("dotenv/config");
 const hre = require("hardhat");
 
 async function main() {
   const [KCoin,NFT,NFTLand] = await Promise.all([
     hre.ethers.getContractFactory("KCoin"),
     hre.ethers.getContractFactory("NFT"),
-    hre.ethers.getContractFactory("NFTLand")
-  ])
+    hre.ethers.getContractFactory("NFTLand"),
+  ]);
 
   const kcoin = await KCoin.deploy();
   await kcoin.deployed();
@@ -15,7 +16,10 @@ async function main() {
   await nft.deployed();
   console.log("NFT deployed to address:", nft.address);
 
-  const nftland = await NFTLand.deploy("");
+  const nftland = await NFTLand.deploy(
+    process.env.TOKEN_ADDRESS,
+    process.env.NFT_ADDRESS
+  );
   await nftland.deployed();
   console.log("NFTLand deployed to address:", nftland.address);
 }
