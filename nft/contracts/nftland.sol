@@ -15,16 +15,13 @@ contract NFTLand is IERC721Receiver {
     ERC721Enumerable enumerable;
     ERC721URIStorage uriStorage;
 
-    uint256 tradeCounter;
     mapping(uint256 => address) poster;
     mapping(uint256 => uint256) public price;
-
     constructor(address _currencyTokenAddress, address _itemTokenAddress) {
         currencyToken = IERC20(_currencyTokenAddress);
         itemToken = IERC721(_itemTokenAddress);
         enumerable = ERC721Enumerable(_itemTokenAddress);
         uriStorage = ERC721URIStorage(_itemTokenAddress);
-        tradeCounter = 0;
     }
 
     function onERC721Received(
@@ -63,14 +60,16 @@ contract NFTLand is IERC721Receiver {
         itemToken.transferFrom(address(this), poster[tokenId], tokenId);
     }
 
-    function getAllTokens() public view returns (string[] memory) {
+    function getAllTokens() public view returns (string[] memory,uint256[] memory) {
         uint256 total = enumerable.totalSupply();
         string[] memory a = new string[](total);
+        uint256[] memory b = new uint256[](total);
 
         for (uint256 i = 0; i < total; i++) {
             a[i] = (uriStorage.tokenURI(enumerable.tokenByIndex(i)));
+            b[i] = price[i];
         }
 
-        return a;
+        return (a,b);
     }
 }

@@ -1,5 +1,6 @@
 const { expect } = require("chai");
 const { ethers } = require("hardhat");
+require("dotenv").config();
 
 describe("NFTLand", function () {
   this.timeout(0);
@@ -12,10 +13,7 @@ describe("NFTLand", function () {
     signers = await ethers.getSigners();
 
     NFTLand = await ethers.getContractFactory("NFTLand");
-    nftland = await NFTLand.deploy(
-      "0x51cBd8a974C57e88Cb87959404a3cF33B5e35e04",
-      "0x8c6f5a906DDb38dC3203aB631d2561A85acD2bb3"
-    );
+    nftland = await NFTLand.deploy(process.env.K_COIN, process.env.NFT);
     await nftland.deployed();
   });
 
