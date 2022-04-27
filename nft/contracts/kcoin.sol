@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract KCoin is ERC20 {
     address owner;
-    
+     
     constructor() ERC20("KCoin","KC"){
         owner = msg.sender;
         _mint(msg.sender, 1e18);

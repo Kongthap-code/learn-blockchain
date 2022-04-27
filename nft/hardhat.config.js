@@ -12,13 +12,12 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
-
 module.exports = {
   solidity: "0.8.4",
   networks: {
     rinkeby: {
       url: process.env.GATEWAY_URL,
-      accounts: [process.env.PRIVATE_KEY]
-    }
-  }
+      accounts: [process.env.PRIVATE_KEY],
+    },
+  },
 };
